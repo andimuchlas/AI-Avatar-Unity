@@ -1,6 +1,6 @@
-# MetaPerson - Unity Oculus Lipsync sample
+# AI Avatar Unity
 
-This sample demonstrates using [MetaPerson](https://metaperson.avatarsdk.com/) avatars in Unity with the [Oculus Lipsync](https://developers.meta.com/horizon/downloads/package/oculus-lipsync-unity/) plugin.
+Proyek Unity untuk avatar AI interaktif dengan integrasi voice pipeline dan lip-sync menggunakan [MetaPerson](https://metaperson.avatarsdk.com/) avatars dan [Oculus Lipsync](https://developers.meta.com/horizon/downloads/package/oculus-lipsync-unity/) plugin.
 
 ![Sample in Unity](./Images/talking_avatar.png)
 
