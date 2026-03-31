@@ -1,6 +1,20 @@
 # AI Avatar Unity
 
-Proyek Unity untuk avatar AI interaktif dengan integrasi voice pipeline dan lip-sync menggunakan [MetaPerson](https://metaperson.avatarsdk.com/) avatars dan [Oculus Lipsync](https://developers.meta.com/horizon/downloads/package/oculus-lipsync-unity/) plugin.
+Proyek Unity untuk avatar AI interaktif yang menggabungkan MetaPerson avatars dengan voice pipeline real-time untuk pengalaman percakapan natural.
+
+## Tech Stack
+
+### Frontend (Unity)
+- **MetaPerson Avatar** - Avatar 3D realistis dari Avatar SDK
+- **Oculus Lipsync** - Plugin untuk animasi bibir dan ekspresi wajah
+- **Voice Pipeline** - Sistem komunikasi real-time dengan backend
+
+### Backend (Docker Containers)
+- **STT (Speech-to-Text)**: `piper1-gpl` - Engine transkripsi suara lokal
+- **TTS (Text-to-Speech)**: `Systran/faster-whisper-tiny` - Sintesis suara dari teks
+- **LLM (Large Language Model)**: `DeepSeek` - Model AI untuk percakapan (via API)
+
+Selain DeepSeek, semua service backend berjalan dalam container Docker untuk deployment yang mudah dan scalable.
 
 ![Sample in Unity](./Images/talking_avatar.png)
 
