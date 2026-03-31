@@ -1,20 +1,34 @@
 # AI Avatar Unity
 
-Proyek Unity untuk avatar AI interaktif yang menggabungkan MetaPerson avatars dengan voice pipeline real-time untuk pengalaman percakapan natural.
+Avatar AI 3D interaktif yang mampu bercakap-cakap secara real-time menggunakan suara. Project ini mengintegrasikan MetaPerson avatar dengan Oculus Lipsync untuk animasi wajah yang natural, dilengkapi voice pipeline end-to-end untuk percakapan AI.
 
-## Tech Stack
+## Fitur
 
-### Frontend (Unity)
-- **MetaPerson Avatar** - Avatar 3D realistis dari Avatar SDK
-- **Oculus Lipsync** - Plugin untuk animasi bibir dan ekspresi wajah
-- **Voice Pipeline** - Sistem komunikasi real-time dengan backend
+- 🗣️ **Voice Conversation** - Percakapan suara real-time dengan AI
+- 👄 **Lip-sync Otomatis** - Animasi bibir sinkron dengan audio menggunakan Oculus Lipsync
+- 🤖 **AI Powered** - Respon cerdas dari DeepSeek LLM
+- 🎭 **Avatar 3D Realistis** - MetaPerson avatar dengan ekspresi wajah natural
+- ⚡ **Real-time Processing** - Pipeline suara low-latency dengan Docker containers
 
-### Backend (Docker Containers)
-- **STT (Speech-to-Text)**: `piper1-gpl` - Engine transkripsi suara lokal
-- **TTS (Text-to-Speech)**: `Systran/faster-whisper-tiny` - Sintesis suara dari teks
-- **LLM (Large Language Model)**: `DeepSeek` - Model AI untuk percakapan (via API)
+## Voice Pipeline
 
-Selain DeepSeek, semua service backend berjalan dalam container Docker untuk deployment yang mudah dan scalable.
+```
+Suara User → STT (piper1-gpl) → Teks → LLM (DeepSeek) → Respon Teks → TTS (faster-whisper-tiny) → Audio → Avatar Bicara
+```
+
+### Tech Stack
+
+**Frontend (Unity)**
+- MetaPerson Avatar - Avatar 3D dari Avatar SDK
+- Oculus Lipsync - Animasi bibir dan ekspresi wajah
+- Voice Pipeline - WebSocket client untuk komunikasi real-time
+
+**Backend (Docker Containers)**
+- STT: `piper1-gpl` - Speech-to-Text engine
+- TTS: `Systran/faster-whisper-tiny` - Text-to-Speech engine  
+- LLM: `DeepSeek` - AI conversation model (via API)
+
+Selain DeepSeek, semua service backend berjalan dalam container Docker.
 
 ![Sample in Unity](./Images/talking_avatar.png)
 
