@@ -4,11 +4,11 @@ Avatar AI 3D interaktif yang mampu bercakap-cakap secara real-time menggunakan s
 
 ## Fitur
 
-- 🗣️ **Voice Conversation** - Percakapan suara real-time dengan AI
-- 👄 **Lip-sync Otomatis** - Animasi bibir sinkron dengan audio menggunakan Oculus Lipsync
-- 🤖 **AI Powered** - Respon cerdas dari DeepSeek LLM
-- 🎭 **Avatar 3D Realistis** - MetaPerson avatar dengan ekspresi wajah natural
-- ⚡ **Real-time Processing** - Pipeline suara low-latency dengan Docker containers
+- **Voice Conversation** - Percakapan suara real-time dengan AI
+- **Lip-sync Otomatis** - Animasi bibir sinkron dengan audio menggunakan Oculus Lipsync
+- **AI Powered** - Respon cerdas dari DeepSeek LLM
+- **Avatar 3D Realistis** - MetaPerson avatar dengan ekspresi wajah natural
+- **Real-time Processing** - Pipeline suara low-latency dengan Docker containers
 
 ## Voice Pipeline
 
@@ -26,6 +26,4 @@ Suara User → STT (piper1-gpl) → Teks → LLM (DeepSeek) → Respon Teks → 
 **Backend (Docker Containers)**
 - STT: `piper1-gpl` - Speech-to-Text engine
 - TTS: `Systran/faster-whisper-tiny` - Text-to-Speech engine  
-- LLM: `DeepSeek` - AI conversation model (via API)
-
-Selain DeepSeek, semua service backend berjalan dalam container Docker.
+- LLM: `DeepSeek`
