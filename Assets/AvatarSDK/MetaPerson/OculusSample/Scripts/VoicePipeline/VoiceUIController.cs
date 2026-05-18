@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace AvatarSDK.MetaPerson.VoicePipeline
 {
@@ -13,6 +14,8 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
         [Header("UI Elements (Optional)")]
         [Tooltip("Text UI untuk menampilkan status AI (Listening, Processing, dll)")]
         public Text statusText;
+        [Tooltip("TMP Text alternatif untuk status AI")]
+        public TMP_Text statusTmpText;
         [Tooltip("Slider UI untuk mengatur volume AI (0.0 sampai 1.0)")]
         public Slider volumeSlider;
 
@@ -52,30 +55,48 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
 
         private void HandleStateChanged(VoicePipelineManager.PipelineState state)
         {
-            if (statusText == null) return;
+            string label = string.Empty;
+            Color labelColor = Color.white;
 
             switch (state)
             {
                 case VoicePipelineManager.PipelineState.Idle:
-                    statusText.text = "🔴 Idle";
-                    statusText.color = Color.red;
+                    label = "Idle";
+                    labelColor = Color.red;
                     break;
                 case VoicePipelineManager.PipelineState.Connecting:
-                    statusText.text = "🟠 Connecting...";
-                    statusText.color = new Color(1f, 0.5f, 0f); // Orange
+                    label = "Connecting...";
+                    labelColor = new Color(1f, 0.5f, 0f); // Orange
                     break;
                 case VoicePipelineManager.PipelineState.Listening:
-                    statusText.text = "🟢 Listening";
-                    statusText.color = Color.green;
+                    label = "Listening";
+                    labelColor = Color.green;
                     break;
                 case VoicePipelineManager.PipelineState.Processing:
-                    statusText.text = "🟡 Processing...";
-                    statusText.color = Color.yellow;
+                    label = "Processing...";
+                    labelColor = Color.yellow;
                     break;
                 case VoicePipelineManager.PipelineState.Speaking:
-                    statusText.text = "🔵 Speaking";
-                    statusText.color = Color.cyan;
+                    label = "Speaking";
+                    labelColor = Color.cyan;
                     break;
+            }
+
+            if (statusText != null)
+            {
+                statusText.text = label;
+                statusText.color = labelColor;
+            }
+
+            if (statusTmpText != null)
+            {
+                statusTmpText.text = label;
+                statusTmpText.color = labelColor;
+            }
+
+            if (statusText == null && statusTmpText == null)
+            {
+                Debug.LogWarning("[VoiceUIController] No status text assigned. Assign statusText or statusTmpText.");
             }
         }
 
@@ -159,6 +180,45 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
             if (_audioSource != null)
             {
                 _audioSource.volume = Mathf.Clamp01(volume);
+            }
+        }
+
+        /// <summary>
+        /// Explicitly start listening for voice input. Use this for WebGL where user gesture is required.
+        /// Can be hooked to a UI button (OnClick -> VoiceUIController.StartListening).
+        /// </summary>
+        public void StartListening()
+        {
+            if (pipelineManager == null)
+            {
+                return;
+            }
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            Debug.Log("[VoiceUIController] User pressed 'Start Listening' button (WebGL).");
+            pipelineManager.RegisterUserGestureStartRequest();
+#else
+            if (pipelineManager.State == VoicePipelineManager.PipelineState.Idle)
+            {
+                Debug.Log("[VoiceUIController] User pressed 'Start Listening' button.");
+                pipelineManager.StartPipeline();
+            }
+            else
+            {
+                Debug.LogWarning($"[VoiceUIController] Cannot start listening. Current state: {pipelineManager.State}");
+            }
+#endif
+        }
+
+        /// <summary>
+        /// Stop listening and reset pipeline. Hook to a UI button as needed.
+        /// </summary>
+        public void StopListening()
+        {
+            if (pipelineManager != null && pipelineManager.State != VoicePipelineManager.PipelineState.Idle)
+            {
+                Debug.Log("[VoiceUIController] User pressed 'Stop Listening' button.");
+                pipelineManager.StopPipeline();
             }
         }
     }

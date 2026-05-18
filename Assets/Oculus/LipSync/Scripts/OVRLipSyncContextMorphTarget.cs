@@ -92,6 +92,11 @@ public class OVRLipSyncContextMorphTarget : MonoBehaviour
     /// </summary>
     void Start ()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        enabled = false;
+        return;
+#endif
+
         // morph target needs to be set manually; possibly other components will need the same
         if(skinnedMeshRenderer == null)
         {

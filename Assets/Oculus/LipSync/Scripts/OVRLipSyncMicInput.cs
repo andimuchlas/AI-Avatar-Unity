@@ -114,6 +114,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
         {
             return;
         }
+#if !UNITY_WEBGL
         if (Microphone.devices.Length == 0)
         {
             return;
@@ -122,6 +123,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
         micSelected = true;
         GetMicCaps();
         initialized = true;
+#endif
     }
 
 
@@ -130,6 +132,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
     /// </summary>
     void Update()
     {
+#if !UNITY_WEBGL
         if (!focused)
         {
             if (Microphone.IsRecording(selectedDevice))
@@ -206,6 +209,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
                 micSelected = false;
             }
         }
+#endif
     }
 
 
@@ -267,6 +271,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
         float buttonSpaceTop,
         float buttonSpaceLeft)
     {
+#if !UNITY_WEBGL
         //If there is more than one device, choose one.
         if (Microphone.devices.Length >= 1 && enableMicSelectionGUI == true && micSelected == false)
         {
@@ -284,6 +289,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
                 }
             }
         }
+#endif
     }
 
     /// <summary>
@@ -293,6 +299,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
     {
         if (micSelected == false) return;
 
+#if !UNITY_WEBGL
         //Gets the frequency of the device
         Microphone.GetDeviceCaps(selectedDevice, out minFreq, out maxFreq);
 
@@ -305,6 +312,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
 
         if (micFrequency > maxFreq)
             micFrequency = maxFreq;
+#endif
     }
 
     /// <summary>
@@ -314,6 +322,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
     {
         if (micSelected == false) return;
 
+#if !UNITY_WEBGL
         //Starts recording
         audioSource.clip = Microphone.Start(selectedDevice, true, 1, micFrequency);
 
@@ -330,6 +339,7 @@ public class OVRLipSyncMicInput : MonoBehaviour
         }
         // Play the audio source
         audioSource.Play();
+#endif
     }
 
     /// <summary>
@@ -351,7 +361,9 @@ public class OVRLipSyncMicInput : MonoBehaviour
         OVRLipSyncContext context = GetComponent<OVRLipSyncContext>();
         context.ResetContext();
 
+#if !UNITY_WEBGL
         Microphone.End(selectedDevice);
+#endif
     }
 
 

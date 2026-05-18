@@ -14,10 +14,19 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
         private readonly Queue<AudioClip> _clipQueue = new Queue<AudioClip>();
         private float _playStartTime;
         private bool _isPlaying;
+        private AudioClip _currentClip;
 
         void Awake()
         {
             _audioSource = GetComponent<AudioSource>();
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+            if (GetComponent<AudioEnergyLipSync>() == null)
+            {
+                gameObject.AddComponent<AudioEnergyLipSync>();
+                Debug.Log("[AudioPlayer] Added AudioEnergyLipSync fallback for WebGL.");
+            }
+#endif
 
             // Fix No Sound issue: OVRLipSyncContext by default mutes the audio (audioLoopback = false)
             // because it expects a mic input. We need it to pass the AI voice through!
@@ -34,8 +43,8 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
             // Play next clip in queue when current finishes
             if (!_audioSource.isPlaying && _clipQueue.Count > 0)
             {
-                AudioClip nextClip = _clipQueue.Dequeue();
-                _audioSource.clip = nextClip;
+                _currentClip = _clipQueue.Dequeue();
+                _audioSource.clip = _currentClip;
                 _audioSource.Play();
                 _isPlaying = true;
                 _playStartTime = Time.time;
@@ -44,6 +53,7 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
             else if (!_audioSource.isPlaying && _isPlaying && Time.time - _playStartTime > 0.1f)
             {
                 _isPlaying = false;
+                _currentClip = null;
             }
         }
 
@@ -73,6 +83,21 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
 
         public bool IsPlaying => _audioSource != null && (_audioSource.isPlaying || _clipQueue.Count > 0 || _isPlaying);
 
+        public AudioClip CurrentClip => _currentClip;
+        public float CurrentPlaybackTime => (_audioSource != null && _audioSource.isPlaying) ? _audioSource.time : 0f;
+        public float CurrentPlaybackNormalized
+        {
+            get
+            {
+                if (_currentClip == null || _currentClip.length <= 0.001f)
+                {
+                    return 0f;
+                }
+
+                return Mathf.Clamp01(CurrentPlaybackTime / _currentClip.length);
+            }
+        }
+
         public void Stop()
         {
             _clipQueue.Clear();
@@ -81,6 +106,7 @@ namespace AvatarSDK.MetaPerson.VoicePipeline
                 _audioSource.Stop();
             }
             _isPlaying = false;
+            _currentClip = null;
         }
 
         /// <summary>

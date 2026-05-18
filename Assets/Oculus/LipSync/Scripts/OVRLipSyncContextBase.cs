@@ -100,6 +100,12 @@ public class OVRLipSyncContextBase : MonoBehaviour
     /// </summary>
     void Awake()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.LogWarning("OVRLipSyncContextBase: Disabled on WebGL because native OVRLipSync is unsupported.");
+        enabled = false;
+        return;
+#endif
+
         // Cache the audio source we are going to be using to pump data to the SR
         if (!audioSource)
         {

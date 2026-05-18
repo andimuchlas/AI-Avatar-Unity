@@ -201,6 +201,13 @@ public class OVRLipSync : MonoBehaviour
     /// </summary>
     void Awake()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        // On WebGL, native plugin not available at all; skip initialization entirely
+        sInitialized = Result.MissingDLL;
+        sInstance = this;
+        return;
+#endif
+
         // We can only have one instance of OVRLipSync in a scene (use this for local property query)
         if (sInstance == null)
         {
@@ -251,6 +258,11 @@ public class OVRLipSync : MonoBehaviour
 
     public static Result Initialize()
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.LogWarning("OVRLipSync: Native plugin is not available on WebGL. Skipping initialization.");
+        sInitialized = Result.MissingDLL;
+        return sInitialized;
+#else
         int sampleRate;
         int bufferSize;
         int numbuf;
@@ -266,16 +278,23 @@ public class OVRLipSync : MonoBehaviour
 
         sInitialized = (Result)ovrLipSyncDll_Initialize(sampleRate, bufferSize);
         return sInitialized;
+#endif
     }
 
     public static Result Initialize(int sampleRate, int bufferSize)
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        Debug.LogWarning("OVRLipSync: Native plugin is not available on WebGL. Skipping initialization.");
+        sInitialized = Result.MissingDLL;
+        return sInitialized;
+#else
         String str = System.String.Format
         ("OvrLipSync Awake: Queried SampleRate: {0:F0} BufferSize: {1:F0}", sampleRate, bufferSize);
         Debug.LogWarning(str);
 
         sInitialized = (Result)ovrLipSyncDll_Initialize(sampleRate, bufferSize);
         return sInitialized;
+#endif
     }
 
     public static void Shutdown()

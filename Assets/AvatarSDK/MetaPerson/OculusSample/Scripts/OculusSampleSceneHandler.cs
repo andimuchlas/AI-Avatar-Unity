@@ -33,20 +33,47 @@ namespace AvatarSDK.MetaPerson.OculusLipSync
 		// Start is called before the first frame update
 		void Start()
 		{
-			progressText.gameObject.SetActive(false);
-			button.onClick.AddListener(OnButtonClick);
+			if (progressText != null)
+			{
+				progressText.gameObject.SetActive(false);
+			}
+			else
+			{
+				Debug.LogWarning("[OculusSampleSceneHandler] progressText is not assigned in Inspector.");
+			}
+
+			if (button != null)
+			{
+				button.onClick.AddListener(OnButtonClick);
+			}
+			else
+			{
+				Debug.LogWarning("[OculusSampleSceneHandler] button is not assigned in Inspector.");
+			}
 		}
 		void ProgressReport(float progress)
 		{
-			progressText.text = string.Format("Downloading avatar: {0}%", (int)(progress * 100));
+			if (progressText != null)
+			{
+				progressText.text = string.Format("Downloading avatar: {0}%", (int)(progress * 100));
+			}
 		}
 		async void OnButtonClick()
 		{
-			button.gameObject.SetActive(false);
-			progressText.gameObject.SetActive(true);
+			if (button != null)
+			{
+				button.gameObject.SetActive(false);
+			}
+			if (progressText != null)
+			{
+				progressText.gameObject.SetActive(true);
+			}
 
 			await loader.LoadModelAsync(avatarUri, ProgressReport);
-			progressText.gameObject.SetActive(false);
+			if (progressText != null)
+			{
+				progressText.gameObject.SetActive(false);
+			}
 
 			AvatarSdkOculusTools.Configure(loader.avatarObject, dstObject);
 
