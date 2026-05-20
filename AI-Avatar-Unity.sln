@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass", "Assembly-CSharp-firstpass.csproj", "{31719297-A68C-2359-55FC-90FB3DA62BC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.LipSync", "Oculus.LipSync.csproj", "{7050B5FB-BB80-D560-5FF8-6B2C0BABC815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{7C71814E-CB32-268F-2541-317056507F47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oculus.LipSync.Editor", "Oculus.LipSync.Editor.csproj", "{51647F9F-8A1F-186A-F109-27DFD23B7C63}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31719297-A68C-2359-55FC-90FB3DA62BC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31719297-A68C-2359-55FC-90FB3DA62BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31719297-A68C-2359-55FC-90FB3DA62BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31719297-A68C-2359-55FC-90FB3DA62BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7050B5FB-BB80-D560-5FF8-6B2C0BABC815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7050B5FB-BB80-D560-5FF8-6B2C0BABC815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7050B5FB-BB80-D560-5FF8-6B2C0BABC815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7050B5FB-BB80-D560-5FF8-6B2C0BABC815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C71814E-CB32-268F-2541-317056507F47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C71814E-CB32-268F-2541-317056507F47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C71814E-CB32-268F-2541-317056507F47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C71814E-CB32-268F-2541-317056507F47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51647F9F-8A1F-186A-F109-27DFD23B7C63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51647F9F-8A1F-186A-F109-27DFD23B7C63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51647F9F-8A1F-186A-F109-27DFD23B7C63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51647F9F-8A1F-186A-F109-27DFD23B7C63}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
